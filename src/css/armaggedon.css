@@ -1,0 +1,246 @@
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+
+  font-family: 'Roboto', sans-serif;
+  color: #000000;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+a, ul, p, main-text {
+  padding: 0;
+  margin: 0;
+}
+
+h3 {
+  position: relative;
+  z-index: 100;
+}
+
+a {
+  text-decoration: none;
+  color: #000000;
+}
+
+li {
+  list-style-type: none;
+}
+
+.container-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.hidden {
+  display: none;
+}
+
+.header {
+  background-color: white;
+  display: flex;
+  margin: 37px 157px 24px 206px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid;
+
+}
+
+.h1 {
+  position: relative;
+  text-transform: uppercase;
+  z-index: 2;
+  letter-spacing: normal;
+}
+
+.header__text {
+  width: 390px;
+}
+
+.main-text {
+  font-family: Helvetica;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.nav {
+  display: flex;
+}
+
+.header__nav {
+  margin: 16px 0 auto auto;
+}
+
+.header__nav-item:not(:last-child) {
+  margin-right: 24px;
+}
+
+.nav__item {
+  font-family: 'Roboto', sans-serif;
+  color: #000000;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  text-decoration: underline;
+}
+
+.nav__item_active {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.asteroids-menu {
+  display: flex;
+  flex-direction: column;
+  margin-left: 206px;
+  margin-right: 157px;
+}
+
+.description {
+  display: flex;
+  justify-content: space-between;
+}
+
+.description__nav {
+  display: flex;
+}
+
+.list {
+  margin-top: 10px;
+}
+
+.list-asteroids {
+  display: flex;
+  flex-direction: column;
+}
+
+.asteroid-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  vertical-align: middle;
+  padding: 40px 20px;
+  border: 1px solid black;
+  border-radius: 10px;
+  position: relative;
+  overflow:hidden;
+  flex-shrink: 2;
+  margin-bottom: 10px;
+}
+
+.asteroid-item__normal {
+  background: linear-gradient(90deg, #CFF37D, #7DE88C);
+
+}
+
+.asteroid-item__danger {
+  background: linear-gradient(90deg, #FFB199, #FF0844);
+}
+
+.rock {
+  position: absolute;
+  left: 100px;
+  top: 28px;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.dinosaur {
+  z-index: 2;
+}
+
+.empty {
+  margin-bottom: -45px;
+  margin-top: auto;
+}
+
+.asteroid__data-frame {
+	display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  width: 290px;
+	margin: 0;
+	padding: 0;
+  margin: 4px;
+  z-index: 2;
+}
+
+.asteriod__data-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.asteriod__data-name:after {
+  content:'.......................................................';
+}
+
+.asteriod__data-value {
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.asteriod__button {
+  padding-top: 2%;
+  z-index: 2;
+}
+
+.asteroid__button-frame {
+  margin: 4px;
+  text-align: center;
+}
+
+.button-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.button {
+  min-width: 150px;
+  background-color: #186DD6;
+  border-radius: 24px;
+  color: #FFFFFF;
+  padding: 10px;
+  border: 0;
+  margin: 5px;
+}
+
+.footer {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.container-destruction {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 10px;
+  height: 500px;
+}
+
+.destruction-asteroid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px 157px 10px 206px;
+  padding-bottom: 24px;
+  border: 1px solid;
+  background: linear-gradient(90deg, #f28fe2, #b704c7);
+  padding: 20px;
+  border-radius: 10px;
+  flex-shrink: 2;
+  overflow:hidden;
+}
