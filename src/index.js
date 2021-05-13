@@ -1,14 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import * as moment from 'moment';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
 import './css/armaggedon.css';
 import './css/armaggedonMobile.css';
 
-import Page from './Page';
-import Measure from './Measure';
-import ListItem from './ListItem';
-import DistructItem from './DistructItem';
+import Header from './Header';
+import Body from './Body';
+import DistructList from './DistructList';
 import reportWebVitals from './reportWebVitals';
 
 class App extends React.Component {
@@ -17,15 +21,13 @@ class App extends React.Component {
     this.state = {
       asteroids: [],
       measure: 'kilometers',
-      page: 'asteroids',
       distructure: [],
       checkbox: false,
     };
-    this.handleSwitchMeasure = this.handleSwitchMeasure.bind(this);
-    this.handleSwitchPage = this.handleSwitchPage.bind(this);
-    this.handleAsteroidToDistruct = this.handleAsteroidToDistruct.bind(this);
     this.getAsteroids = this.getAsteroids.bind(this);
-    this.handleFinishDistruct = this.handleFinishDistruct.bind(this);
+    this.handleSwitchMeasure = this.handleSwitchMeasure.bind(this);
+    this.handleAsteroidToDistruct = this.handleAsteroidToDistruct.bind(this);
+    this.handleAsteroidDistruct = this.handleAsteroidDistruct.bind(this);
     this.handleCancelDistruct = this.handleCancelDistruct.bind(this);
     this.handleCheckbox = this.handleCheckbox.bind(this);
   }
@@ -72,7 +74,6 @@ class App extends React.Component {
          this.setState({
            asteroids: newList,
            measure: 'kilometers',
-           page: 'asteroids',
            distructure: [],
            checkbox: false,
          });
@@ -90,29 +91,12 @@ class App extends React.Component {
     this.setState({
       ...this.state,
       measure: measureName,
-      page: 'asteroids',
-      distructure: [...this.state.distructure],
-      checkbox: false,
-    });
-  }
-
-  handleSwitchPage(event) {
-    event.preventDefault();
-    const pageName = event.target.name;
-
-    this.setState({
-      ...this.state,
-      measure: 'kilometers',
-      page: pageName,
       distructure: [...this.state.distructure],
       checkbox: false,
     });
   }
 
   handleAsteroidToDistruct(event) {
-    event.preventDefault();
-    const pageName = event.target.name;
-
     const id = event.target.id;
 
     const asteroid = this.state.asteroids.filter((asteroid) => asteroid.id === id)[0];
@@ -121,51 +105,35 @@ class App extends React.Component {
     if (checkDestructureList.length === 0) {
       this.setState({
         ...this.state,
-        measure: 'kilometers',
-        page: pageName,
         distructure: [...this.state.distructure, asteroid],
         checkbox: false,
       });
     } else {
-      this.setState({
-        ...this.state,
-        measure: 'kilometers',
-        page: pageName,
-        distructure: [...this.state.distructure],
-        checkbox: false,
-      });
+      this.setState({ ...this.state });
     }
   }
 
-  handleFinishDistruct(event) {
-    event.preventDefault();
-    const pageName = event.target.name;
-
+  handleAsteroidDistruct(event) {
     const id = event.target.id;
     const asteroid = this.state.asteroids.map((asteroid) => {
       if (asteroid.id === id) {
         asteroid.markDistructure = true;
       }
     })[0];
-    this.handleSwitchPage(event);
   }
 
   handleCancelDistruct(event) {
-    event.preventDefault();
-    const pageName = event.target.name;
-
     const id = event.target.id;
     const asteroid = this.state.asteroids.map((asteroid) => {
       if (asteroid.id === id) {
         asteroid.markDistructure = false;
       }
     })[0];
-    this.handleSwitchPage(event);
+
     const deleteAsteroidFromList = this.state.distructure.filter((asteroid) => asteroid.id !== id);
     this.setState({
       ...this.state,
       measure: 'kilometers',
-      page: pageName,
       distructure: [...deleteAsteroidFromList],
       checkbox: false,
     });
@@ -180,45 +148,24 @@ class App extends React.Component {
   }
 
   render() {
-
     return (
       <div>
-        <div class="container-header">
-         <header class='header'>
-           <div class='header__promo'>
-             <h1 class='h1'>armaggedon v</h1>
-             <p class='header__text main-text'>
-               Сервис мониторинга и уничтожения
-                астероидов, опасно подлетающих к Земле.
-             </p>
-           </div>
-           <Page value={this.state} switch={this.handleSwitchPage}/>
-         </header>
-        </div>
-
-        <div className={ this.state.page == 'asteroids'
-                                     ? 'container'
-                                     : 'hidden'}>
-          <div class='asteroids-menu'>
-
-            <div class='description'>
-              <label class="main-text">
-                <input type="checkbox" class='checkbox' onClick={this.handleCheckbox}/>
-                Показать только опасные
-              </label>
-              <Measure value={this.state} change={this.handleSwitchMeasure}/>
-            </div>
-
-            <ListItem value={this.state} change={this.handleSwitchMeasure}
-              distruct={this.handleAsteroidToDistruct}
-              />
-          </div>
-        </div>
-        <DistructItem
-          value={this.state}
-          distruct={this.handleFinishDistruct}
-          cancel={this.handleCancelDistruct}
-          />
+        <Header/>
+         <Switch>
+           <Route path="/destroy">
+             <DistructList
+               value={this.state}
+               distruct={this.handleAsteroidDistruct}
+               cancel={this.handleCancelDistruct}
+               />
+           </Route>
+          <Route path="/">
+            <Body value={this.state}
+                  checkbox={this.handleCheckbox}
+                  measure={this.handleSwitchMeasure}
+                  distruct={this.handleAsteroidToDistruct}/>
+          </Route>
+        </Switch>
         <div class="container">
           <footer class='footer'>
            <p class='main-text'>2021 © все права и планета защищены</p>
@@ -232,7 +179,9 @@ class App extends React.Component {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

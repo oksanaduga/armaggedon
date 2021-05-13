@@ -87,7 +87,6 @@ function ListItem(props) {
              <div class='asteroid__button-frame'>
                <a><button class='button main-text'
                           onClick={props.distruct}
-                          name='distructure'
                           id={asteroid.id}>На уничтожение</button></a>
              </div>
            </div>
@@ -97,13 +96,9 @@ function ListItem(props) {
     )
   })
 
-
-
   return (
   <div class="list">
-
       {rows}
-
   </div>
   );
 }
